@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Checkout( extends StatefulWidget {
-  const Checkout(({super.key});
+class Checkout extends StatefulWidget {
+  const Checkout({super.key});
 
   @override
-  State<Checkout(> createState() => _Checkout(State();
+  State<Checkout> createState() => _CheckoutState();
 }
 
-class _Checkout(State extends State<Checkout(> {
+class _CheckoutState extends State<Checkout> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(appBar: AppBar(title: Text("Check Out")));
   }
 }

@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:badges/badges.dart';
-import './screens/product.dart';
-import './screens/backup.dart';
-import './screens/cart_screen.dart';
-import './screens/customer.dart';
-import './screens/order_history.dart';
-import './screens/home.dart';
-import './screens/checkout.dart';
+import './screens/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      title: 'POS App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: MainScreen(),
+    );
   }
 }
