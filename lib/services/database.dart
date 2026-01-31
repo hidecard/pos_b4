@@ -12,7 +12,7 @@ class DatabaseService {
   static Database? _database;
   static const String tableproduct = 'product';
   static const String tablecustomer = 'customer';
-  static const String tableorder = 'order';
+  static const String tableorder = 'orders';
   static const String dbname = 'pos.db';
 
   Future<Database> get database async {
@@ -34,6 +34,7 @@ class DatabaseService {
         price REAL,
         imageUrl TEXT,
         stock INTEGER
+    );
     ''');
     await db.execute('''
         CREATE TABLE $tablecustomer(
@@ -41,7 +42,7 @@ class DatabaseService {
         name TEXT,
         email TEXT,
         phone TEXT
-        )
+        );
 ''');
     await db.execute('''
         CREATE TABLE $tableorder(
@@ -50,10 +51,10 @@ class DatabaseService {
         items TEXT,
         total REAL,
         date TEXT
-        )
+        );
 ''');
 
-await db.insert(tableproduct, {
+    await db.insert(tableproduct, {
       'id': 1,
       'name': 'Coffee',
       'price': 4.99,
@@ -73,6 +74,38 @@ await db.insert(tableproduct, {
       'phone': '1234567890',
       'email': 'john@example.com',
     });
+  }
 
+  // Product CRUD methods
+  Future<List<Product>> getAllProducts() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(tableproduct);
+    return List.generate(maps.length, (i) {
+      return Product.fromMap(maps[i]);
+    });
+  }
+
+  Future<void> insertProduct(Product product) async {
+    final db = await database;
+    await db.insert(
+      tableproduct,
+      product.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> updateProduct(Product product) async {
+    final db = await database;
+    await db.update(
+      tableproduct,
+      product.toMap(),
+      where: 'id = ?',
+      whereArgs: [product.id],
+    );
+  }
+
+  Future<void> deleteProduct(int id) async {
+    final db = await database;
+    await db.delete(tableproduct, where: 'id = ?', whereArgs: [id]);
   }
 }
