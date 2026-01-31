@@ -296,7 +296,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   Get.snackbar(
                     'Success',
                     'Product added',
-                    snackPosition: SnackPosition.TOP,
+                    snackPosition: SnackPosition.BOTTOM,
                   );
                 }
               },

@@ -106,6 +106,10 @@ class DatabaseService {
 
   Future<void> deleteProduct(int id) async {
     final db = await database;
-    await db.delete(tableproduct, where: 'id = ?', whereArgs: [id]);
+    await db.delete(
+      tableproduct,
+      where: 'id = ?',
+      whereArgs: [id]
+    );
   }
 }
