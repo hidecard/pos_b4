@@ -106,10 +106,39 @@ class DatabaseService {
 
   Future<void> deleteProduct(int id) async {
     final db = await database;
-    await db.delete(
-      tableproduct,
-      where: 'id = ?',
-      whereArgs: [id]
+    await db.delete(tableproduct, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // Customer CRUD methods
+  Future<List<Customer>> getAllCustomers() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(tablecustomer);
+    return List.generate(maps.length, (i) {
+      return Customer.fromMap(maps[i]);
+    });
+  }
+
+  Future<void> insertCustomer(Customer customer) async {
+    final db = await database;
+    await db.insert(
+      tablecustomer,
+      customer.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  Future<void> updateCustomer(Customer customer) async {
+    final db = await database;
+    await db.update(
+      tablecustomer,
+      customer.toMap(),
+      where: 'id = ?',
+      whereArgs: [customer.id],
+    );
+  }
+
+  Future<void> deleteCustomer(int id) async {
+    final db = await database;
+    await db.delete(tablecustomer, where: 'id = ?', whereArgs: [id]);
   }
 }

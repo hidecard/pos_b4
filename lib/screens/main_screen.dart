@@ -16,7 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     Home(),
     ProductScreen(),
-    Customer(),
+    CustomerScreen(),
     Order(),
     Backup(),
   ];
