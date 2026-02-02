@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './screens/main_screen.dart';
+import './controllers/cart_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'POS App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: MainScreen(),
+      initialBinding: BindingsBuilder(() {
+        Get.lazyPut(() => CartController());
+      }),
     );
   }
 }
