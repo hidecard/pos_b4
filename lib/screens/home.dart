@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../services/database.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
+import '../controllers/cart_controller.dart';
+import 'cart_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -47,6 +50,44 @@ class _HomeState extends State<Home> {
             );
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.to(() => CartScreen()),
+        child: Stack(
+          children: [
+            Icon(Icons.shopping_cart),
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Obx(() {
+                final cartController = Get.find<CartController>();
+                return cartController.cartItems.isNotEmpty
+                    ? Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '${cartController.cartItems.length}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : SizedBox.shrink();
+              }),
+            ),
+          ],
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

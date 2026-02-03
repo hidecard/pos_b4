@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import '../models/product.dart';
 import '../models/cart_item.dart';
+import '../models/customer.dart';
 
 class CartController extends GetxController {
   var cartItems = <CartItem>[].obs;
+  var selectedCustomer = Rx<Customer?>(null);
 
   bool addToCart(Product product) {
     if (product.stock > 0) {
@@ -21,11 +23,19 @@ class CartController extends GetxController {
     return false;
   }
 
-  void removeFromCart(int productId) {
-    cartItems.removeWhere((item) => item.product.id == productId);
+  void removeFromCart(int index) {
+    cartItems.removeAt(index);
   }
 
-  double get totalPrice {
+  void setCustomer(Customer customer) {
+    selectedCustomer.value = customer;
+  }
+
+  void calculateTotal() {
+    // This method can be used to recalculate total if needed
+  }
+
+  double get totalAmount {
     return cartItems.fold(
       0,
       (sum, item) => sum + (item.product.price * item.quantity),

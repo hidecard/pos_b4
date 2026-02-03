@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './screens/main_screen.dart';
 import './controllers/cart_controller.dart';
+import './controllers/customer_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       home: MainScreen(),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut(() => CartController());
+        Get.lazyPut(() => CustomerController());
       }),
     );
   }
